@@ -92,8 +92,6 @@ let vm = new Vue({
   }
 })
 vm.plus()
-console.log(vm.a)
-debugger
 new Vue({
   el: '#app',
   router,
