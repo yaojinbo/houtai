@@ -7,11 +7,14 @@ import router from './router'
 import axios from 'axios';
 //引入elementUI
 import ElementUI from 'element-ui';
+import "element-ui/lib/theme-chalk/index.css";
 //我们会采用axios来存取api,但是axios会使用到ES6的promise,
 //ie没有办法支援,所以用babel-polyfill将ES6语法转换到ES5
 import "babel-polyfill";
 //引入echarts
 import echarts from 'echarts'
+//引入网络接口插件
+import VueResource from 'vue-resource'
 Vue.prototype.$echarts = echarts
 //把axios挂载到vue上
 Vue.prototype.$http = axios
@@ -24,10 +27,15 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 Vue.config.productionTip = false
 //全局使用element插件
 Vue.use(ElementUI)
+Vue.use(VueResource)
 // loading效果  拦截器
 import { Loading } from "element-ui";
 //http请求拦截器
 let loadinginstaceContainer;
+//接口地址
+let url = "http://localhost:8082"
+axios.defaults.baseURL = "http://localhost:8082"
+Vue.prototype.$basePostUrl = axios.defaults.baseURL;
 axios.interceptors.request.use(
   config => {
     loadinginstaceContainer = Loading.service({
@@ -62,27 +70,27 @@ axios.interceptors.response.use(
   }
 )
 //导航守卫
-router.beforeEach((to, from, next) => {
-  //console.log('登录005');
-  if (sessionStorage.userId != "" && sessionStorage.userId != undefined) {
-    // console.log(to.path) //每次跳转的路径
-    if (to.path === "/") {
-      //登录状态下 访问login.vue页面 会跳到index.vue
-      // next({path: '/home'});
-    } else {
-      next();
-    }
-  } else {
-    // 如果没有session ,访问任何页面。都会进入到 登录页
-    if (to.path === "/login") {
-      // 如果是登录页面的话，直接next() -->解决注销后的循环执行bug
-      next();
-    } else {
-      // 否则 跳转到登录页面
-      next("/login");
-    }
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   //console.log('登录005');
+//   if (sessionStorage.userId != "" && sessionStorage.userId != undefined) {
+//     // console.log(to.path) //每次跳转的路径
+//     if (to.path === "/") {
+//       //登录状态下 访问login.vue页面 会跳到index.vue
+//       // next({path: '/home'});
+//     } else {
+//       next();
+//     }
+//   } else {
+//     // 如果没有session ,访问任何页面。都会进入到 登录页
+//     if (to.path === "/login") {
+//       // 如果是登录页面的话，直接next() -->解决注销后的循环执行bug
+//       next();
+//     } else {
+//       // 否则 跳转到登录页面
+//       next("/login");
+//     }
+//   }
+// });
 let vm = new Vue({
   data:{a:1},
   methods:{

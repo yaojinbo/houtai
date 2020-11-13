@@ -24,6 +24,14 @@ export default {
     function randomData() {  
      return Math.round(Math.random()*500);  
     } 
+    this.$http.get('/api/MapData',{
+      type:'china',
+      name:'分析图'
+    }).then(res => {
+      console.log('请求成功')
+    }).catch(err=>
+        console.log(err)
+    )
     let mydata = [  
         {name: '北京',value: '100' },{name: '天津',value: randomData() },  
         {name: '上海',value: randomData() },{name: '重庆',value: randomData() },  
@@ -54,7 +62,10 @@ export default {
         //标题名称
         text:'访问情况分析图',
         //水平居中
-        x:'center'
+        x:'center',
+        //标题距离上部分距离
+        top:30,
+        // bottom:0
       },
       //图表系列选项
       series:[{
@@ -62,6 +73,7 @@ export default {
         type:'map',
         //中国地图
         map:'china',
+        layoutCenter: ['30%', '10%'],
         //数据
         data:mydata
       }],
@@ -79,7 +91,7 @@ export default {
         text: ['高', '低'],
         //整体控制器透明度
         calculable: true,
-        //
+        //左下角控制器颜色
         inRange: {
             color: ['#e0ffff', '#006edd','#ccc']
         },

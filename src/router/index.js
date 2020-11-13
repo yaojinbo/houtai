@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-
+import login from '@/components/home'
 Vue.use(Router)
 
 export default new Router({
@@ -9,18 +8,27 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
-      component: HelloWorld
+      component:login
     },
     {
       path:'/login',
       name:'login',
       component:resolve => 
-        require(["@/components/HelloWorld"], resolve),
+        require(["@/components/home"], resolve),
     },
     {
-      path:'/home',
-      name:'home',
-      component:() => import("@/components/HelloWorld")
+      //中国地图
+      path:'/map',
+      name:'map',
+      component:resolve => 
+        require(["@/components/map"], resolve),
+    },
+      //柱状图
+    {
+      path:'/zhu',
+      name:'zhu',
+      component:resolve=>
+        require(["@/components/zhu"],resolve)
     }
   ]
 })
