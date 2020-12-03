@@ -29,6 +29,13 @@ export default new Router({
       name:'zhu',
       component:resolve=>
         require(["@/components/zhu"],resolve)
+    },
+    //柱线结合
+    {
+      path:'/zxjiehe',
+      name:'zxjiehe',
+      component:resolve=>
+        require(["@/components/zxjiehe"],resolve)
     }
   ]
 })
